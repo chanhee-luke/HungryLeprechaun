@@ -25,7 +25,7 @@ struct Filter {
 
 // user-defined point type
 // inherits array in order to use operator[]
-class Location: public array < double, 2 > {
+class Location: public array <double, 2> {
 	public:
 
 		// dimension of space (or "k" of k-d tree)
@@ -93,7 +93,7 @@ int main(int argc, char** argv) {
 				break;
 		}
 	}
-	if(argc - argind < 1) usage(programname, 1);
+	if(argc - argind < 2) usage(programname, 1);
 
 	double longSearch = atof(argv[argind++]);
 	double latSearch = atof(argv[argind]);
@@ -103,9 +103,8 @@ int main(int argc, char** argv) {
 	ifstream str(filename);
 	vector<Location> locs;
 	string line;
-	getline(str, line);
-	stringstream ss(line);
-	while(str){
+	while(getline(str, line)){
+		stringstream ss(line);
 		string word;
 		getline(ss, word, ';');
 		double lon = stod(word);
@@ -121,10 +120,6 @@ int main(int argc, char** argv) {
 
 		Location l(lon, lat, d);
 		locs.push_back(l);
-
-
-		getline(str, line);
-		ss = stringstream(line);
 	}
 
 	// SETUP
@@ -145,7 +140,7 @@ int main(int argc, char** argv) {
 	}
 
 	// OUTPUT
-	for(auto it = result.begin(), it != result.end(); it++){
+	for(auto it = result.begin(); it != result.end(); it++){
 		cout << *it << "\n";//outputs the line number
 	}
 
