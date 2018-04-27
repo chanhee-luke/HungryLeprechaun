@@ -24,8 +24,8 @@ struct Filter {
 };
 
 // user-defined point type
-// inherits std::array in order to use operator[]
-class Location: public std::array < double, 2 > {
+// inherits array in order to use operator[]
+class Location: public array < double, 2 > {
 	public:
 
 		// dimension of space (or "k" of k-d tree)
@@ -47,7 +47,7 @@ class Location: public std::array < double, 2 > {
 };
 
 void usage(string programname, int exitcode){
-	std::cout << "Usage: " << programname << " flags... longitude latitude\n"
+	cout << "Usage: " << programname << " flags... longitude latitude\n"
 			  << "Flags: \n"
 			  << "\t-h      : shows this prompt\n"
 			  << "\t-f FILE : chooses the file to load locations from\n"
@@ -65,47 +65,47 @@ int main(int argc, char** argv) {
 
 	// PARSE
 	int argind = 1;
-    string filename = "locations.csv";
-    string programname = string(argv[0]);
-    while (argind < argc && strlen(argv[argind]) > 1 && argv[argind][0] == '-') {
-        char *arg = argv[argind++];
-        switch (arg[1]) {
-            case 'h':
-                usage(programname, 0);
-                break;
-            case 'f': {
-                    char* format = argv[argind++];
-                    filename = string(format);
-                }
-                break;
-            case 'k': {
-                    char* num = argv[argind++];
-                    k = atoi(num);
-            	}
-            	break;
-            case 'r': {
-                    char* dist = argv[argind++];
-                    r = atof(dist);
-            	}
-            	break;
-            default:
-                usage(programname, 1);
-                break;
-        }
-    }
-    if(argc - argind < 1) usage(programname, 1);
+	string filename = "locations.csv";
+	string programname = string(argv[0]);
+	while (argind < argc && strlen(argv[argind]) > 1 && argv[argind][0] == '-') {
+		char *arg = argv[argind++];
+		switch (arg[1]) {
+			case 'h':
+				usage(programname, 0);
+				break;
+			case 'f': {
+					char* format = argv[argind++];
+					filename = string(format);
+				}
+				break;
+			case 'k': {
+					char* num = argv[argind++];
+					k = atoi(num);
+				}
+				break;
+			case 'r': {
+					char* dist = argv[argind++];
+					r = atof(dist);
+				}
+				break;
+			default:
+				usage(programname, 1);
+				break;
+		}
+	}
+	if(argc - argind < 1) usage(programname, 1);
 
-    double longSearch = atof(argv[argind++]);
-    double latSearch = atof(argv[argind]);
+	double longSearch = atof(argv[argind++]);
+	double latSearch = atof(argv[argind]);
 
 
-    // READ DATA FILE
-	std::ifstream str(filename);
-	std::vector<Location> locs;
+	// READ DATA FILE
+	ifstream str(filename);
+	vector<Location> locs;
+	string line;
+	getline(str, line);
+	stringstream ss(line);
 	while(str){
-		string line;
-		getline(str, line);
-		std::stringstream ss(line);
 		string word;
 		getline(ss, word, ';');
 		double lon = stod(word);
@@ -121,13 +121,17 @@ int main(int argc, char** argv) {
 
 		Location l(lon, lat, d);
 		locs.push_back(l);
+
+
+		getline(str, line);
+		ss = stringstream(line);
 	}
 
 	// SETUP
 	kdt::KDTree <Location> kdtree(locs);
 
 	Location query(longSearch, latSearch);//passed in params
-	std::vector<int> result;
+	vector<int> result;
 
 	// SEARCH
 	if(r < 0){
@@ -141,6 +145,9 @@ int main(int argc, char** argv) {
 	}
 
 	// OUTPUT
+	for(auto it = result.begin(), it != result.end(); it++){
+		cout << *it << "\n";//outputs the line number
+	}
 
 	return 0;
 }
