@@ -2,20 +2,26 @@
 #include <iostream>
 #include <array>
 #include <vector>
+#include <fstream>
+#include <sstream>
+#include <string>
+#include <cstring>
 
 #include "kdtree.h"
+
+using namespace std;
 
 struct Descriptor {
 	//info about a given location
 	string name;
-}
+};
 
 struct Filter {
 
 	bool operator()(){
 		return true;
 	}
-}
+};
 
 // user-defined point type
 // inherits std::array in order to use operator[]
@@ -34,7 +40,7 @@ class Location: public std::array < double, 2 > {
 			(*this)[1] = lat;
 		}
 		Location(double lon, double lat, Descriptor &d) {
-			(*this)[0] = long;
+			(*this)[0] = lon;
 			(*this)[1] = lat;
 			this->d = d;
 		}
@@ -65,7 +71,7 @@ int main(int argc, char** argv) {
         char *arg = argv[argind++];
         switch (arg[1]) {
             case 'h':
-                usage(0);
+                usage(programname, 0);
                 break;
             case 'f': {
                     char* format = argv[argind++];
@@ -83,23 +89,23 @@ int main(int argc, char** argv) {
             	}
             	break;
             default:
-                usage(1);
+                usage(programname, 1);
                 break;
         }
     }
-    if(argc - argind < 1) usage(1);
+    if(argc - argind < 1) usage(programname, 1);
 
     double longSearch = atof(argv[argind++]);
     double latSearch = atof(argv[argind]);
 
 
     // READ DATA FILE
-	ifstream str(filename);
-	vector<Location> locs;
+	std::ifstream str(filename);
+	std::vector<Location> locs;
 	while(str){
 		string line;
 		getline(str, line);
-		stringstream ss(line);
+		std::stringstream ss(line);
 		string word;
 		getline(ss, word, ';');
 		double lon = stod(word);
@@ -115,7 +121,6 @@ int main(int argc, char** argv) {
 
 		Location l(lon, lat, d);
 		locs.push_back(l);
-
 	}
 
 	// SETUP
@@ -125,7 +130,7 @@ int main(int argc, char** argv) {
 	std::vector<int> result;
 
 	// SEARCH
-	if(dist < 0){
+	if(r < 0){
 		// k-nearest neigbors search
 		result = kdtree.knnSearch(query, k);
 
