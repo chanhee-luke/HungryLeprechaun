@@ -14,7 +14,7 @@
 </head>
 <body>
 	<h1>Hello, world!</h1>
-	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="crossorigin="anonymous"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 	<div class="container-fluid">
 		<div class="row">
@@ -81,10 +81,11 @@
 	<script src="https://maps.googleapis.com/maps/api/js?key=APIKEY&callback=initMap" async defer></script>
 	<script type="text/javascript">
 		var loc = {lat: 41.699170, lng: -86.238754};
+		var map;
 		function initMap() {
 			var locMarker; 
 			var hasBeenDragged = false;
-			var map = new google.maps.Map(document.getElementById('map'), {
+			map = new google.maps.Map(document.getElementById('map'), {
 				zoom: 16,
 				center: loc
 			});
@@ -120,7 +121,16 @@
 		}
 
 		function update(){
-			console.log("changed");
+			$.getJSON("locations.php", { "long" : loc.lng, "lat" : loc.lat }, function(result){
+				$.each(result, function(index, elem){
+					new google.maps.Marker({
+						position: { "lng" : elem.long, "lat" : elem.lat },
+						map: map,
+						label: index,
+						draggable: false
+					});
+				});
+			});
 		}
 		$("#filter input,select").change(update);
 	</script>
