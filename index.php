@@ -78,12 +78,13 @@
 			</div>
 		</div>
 	</div>
-	<script src="https://maps.googleapis.com/maps/api/js?key=APIKEY&callback=initMap" async defer></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=<?php require "key.txt" ?>&callback=initMap" async defer></script>
 	<script type="text/javascript">
 		var loc = {lat: 41.699170, lng: -86.238754};
 		var map;
+		var markers = [];
 		function initMap() {
-			var locMarker; 
+			var locMarker;
 			var hasBeenDragged = false;
 			map = new google.maps.Map(document.getElementById('map'), {
 				zoom: 16,
@@ -101,6 +102,7 @@
 					}
 				});
 			}
+			update();
 			locMarker = new google.maps.Marker({
 				position: loc,
 				map: map,
@@ -111,6 +113,7 @@
 				hasBeenDragged = true;
 				map.setCenter(locMarker.getPosition());
 				update();
+				loc = locMarker.getPosition();
 				//recalculate positions
 			});
 
@@ -122,8 +125,13 @@
 
 		function update(){
 			$.getJSON("locations.php", { "long" : loc.lng, "lat" : loc.lat }, function(result){
+				$.each(markers, function(index, elem){
+					elem.setMap(null);
+				});
+				markers = null;
+				markers = {};
 				$.each(result, function(index, elem){
-					new google.maps.Marker({
+					markers[result] = new google.maps.Marker({
 						position: { "lng" : elem.long, "lat" : elem.lat },
 						map: map,
 						label: index,
