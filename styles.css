@@ -1,0 +1,12 @@
+#map {
+	width: 100%;
+	height: 50vh;
+	background-color: grey;
+}
+ul.list-unstyled img {
+	height: 100%;
+	width: 64px;
+}
+.template {
+	display:none;
+}
