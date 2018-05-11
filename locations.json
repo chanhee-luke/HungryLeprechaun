@@ -1,5 +1,5 @@
 [
-	{ "lat":41.6993, "long":-86.2397, "name":"Alumni Hall Dawg Pizza" },
+	{ "lat":41.6993, "long":-86.2397, "name":"Alumni Hall Dawg Pizza", "price"=1, "desc"="Home of delicious pizza bagels...", "img"="https://scontent-ort2-2.xx.fbcdn.net/v/t1.0-9/10456110_727520817320200_1265283995442848159_n.png?_nc_cat=0&oh=004b5e0d33f7be3c6257574affdbeb46&oe=5B886AAE" },
 	{ "lat":41.6992, "long":-86.2379, "name":"Crossings" },
 	{ "lat":41.7045, "long":-86.2329, "name":"Dunne Hall 4 Coast Waffles and Floats" },
 	{ "lat":41.7033, "long":-86.2376, "name":"Zahm House Za" },

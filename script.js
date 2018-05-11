@@ -39,8 +39,12 @@ var decimals = Math.pow(10, 2);
 var alpha = "abcdefghijklmnopqrstuvwxyz".toUpperCase();
 var alphaIndex;
 function update(){
-	console.log(loc.lng + ", " + loc.lat);
-	$.getJSON("locations.php", { "long" : loc.lng, "lat" : loc.lat }, function(result){
+	var query = { "long" : loc.lng, "lat" : loc.lat };
+	if($("#query").val()) query.query = $("#query").val();
+	if($("#price").val().length) query.price = $("#price").val().reduce(function(sum, num){return parseInt(sum) + parseInt(num)});
+	if($("#distance").val() != -1) query.rad = $("#distance").val();
+	if($("#num").val() != -1) query.num = $("#num").val();
+	$.getJSON("locations.php", query, function(result){
 		$.each(markers, function(index, elem){
 			elem.setMap(null);
 		});
