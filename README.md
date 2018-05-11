@@ -3,7 +3,6 @@ John Meyer(jmeyer5) Joseph Han(shan3) Luke Song(csong1)
 
 Tool for hungry ND students
 
-----
 Dependencies:
 ====
 The backend application uses C++ and can be compiled by the Makefile.
@@ -12,7 +11,6 @@ The rest of the code proper is in php.
 
 The tests and timers are a mix of python and shell scripts.
 
-----
 Running:
 =====
 
@@ -20,13 +18,13 @@ Running:
 2. Run tests/test.sh to check if there is any error
 3. Place in php-enabled root (e.g. /var/www)
 
-----
 Testing:
 =======
 1. run tests/test.sh script
 2. run time/time.sh script
 
-----
+We had tests/test.sh run as a git hook so that before you are able to commit, the code must remain unbroken.
+
 Frontend:
 =======
 Code is hosted [here](http://project.whaleoftime.com)
