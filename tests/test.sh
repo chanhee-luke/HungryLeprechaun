@@ -284,4 +284,4 @@ fi
 
 echo "Score: 100.0"
 
-return 0;
+exit 0;
