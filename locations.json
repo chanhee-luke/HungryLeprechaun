@@ -1,9 +1,9 @@
 [
 	{ "lat":41.6993, "long":-86.2397, "name":"Alumni Hall Dawg Pizza", "price":1, "desc":"Home of delicious pizza bagels...", "img":"https://scontent-ort2-2.xx.fbcdn.net/v/t1.0-9/10456110_727520817320200_1265283995442848159_n.png?_nc_cat=0&oh=004b5e0d33f7be3c6257574affdbeb46&oe=5B886AAE" },
-	{ "lat":41.6992, "long":-86.2379, "name":"Crossings" },
-	{ "lat":41.7045, "long":-86.2329, "name":"Dunne Hall 4 Coast Waffles and Floats" },
-	{ "lat":41.7033, "long":-86.2376, "name":"Zahm House Za" },
-	{ "lat":41.7001, "long":-86.2357, "name":"Waddicks" },
+	{ "lat":41.6992, "long":-86.2379, "name":"Crossings", "price":1, "desc":"Cafe located in the Eck Hall of Law", "img":"https://scontent-ort2-1.xx.fbcdn.net/v/t1.15752-9/32286570_2080006818937528_2087009804097683456_n.png?_nc_cat=0&oh=1ac4ffdb46c04b3bc00e1ac80cbd0a86&oe=5B8A9388" },
+	{ "lat":41.7045, "long":-86.2329, "name":"Dunne Hall 4 Coast Waffles and Floats" ,"price":1, "desc":"Serving up delicious floats and waffles celebrating four corners of America", "img":"https://scontent-ort2-1.xx.fbcdn.net/v/t1.0-9/17426051_399734923734226_5223463295322952459_n.jpg?_nc_cat=0&oh=948ab213f560547e8975c953e5770792&oe=5B8E79F3"},
+	{ "lat":41.7033, "long":-86.2376, "name":"Zahm House Za" , "price":1, "desc":"Zahm House serves-up ND's best and favorite pizzas", "img":"https://zahm.nd.edu/za/pizza.jpg"},
+	{ "lat":41.7001, "long":-86.2357, "name":"Waddicks" ,"price":1, "desc":"Popular cafe-style coffee shop in O'Shaughnessy Hall", "img":"https://scontent-ort2-1.xx.fbcdn.net/v/t1.15752-9/32337192_2080008592270684_7558409500495970304_n.png?_nc_cat=0&oh=e00faef0defd31d8a6b38e314ee11438&oe=5B909A89"},
 	{ "lat":41.7003, "long":-86.2347, "name":"Decio Cafe" },
 	{ "lat":41.6992, "long":-86.2414, "name":"Reckers" },
 	{ "lat":41.6983, "long":-86.2393, "name":"Sorin's" },
