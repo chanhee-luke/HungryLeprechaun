@@ -45,9 +45,9 @@
 						<div class="col-sm-10">
 							<select id="distance" class="custom-select">
 								<option value="-1" selected>Any</option>
-								<option value="2">&lt;2 Miles</option>
-								<option value="1">&lt;1 Mile</option>
 								<option value=".5">&lt;.5 Miles</option>
+								<option value=".25">&lt;.25 Miles</option>
+								<option value=".1">&lt;.1 Miles</option>
 							</select>
 						</div>
 					</div>

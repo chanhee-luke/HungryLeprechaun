@@ -58,8 +58,8 @@ void usage(string programname, int exitcode){
 			  << "\t-h        : shows this prompt\n"
 			  << "\t-f FILE   : chooses the file to load locations from\n"
 			  << "\t-k NUMBER : select how many to return\n"
-			  << "\t-r RADIUS : find within this radius\n"
-			  << "\t-q QUERY  : find similar to this\n"
+			  << "\t-r RADIUS : find within this radius (miles)\n"
+			  << "\t-q QUERY  : find similar to this (regex)\n"
 			  << "\t-p PRICES : find with selected prices (bitwise mask from 0 to 15, 1 = $, 8 = $$$$)\n";
 
 			  //TODO additional args for when FILTER is implemented
@@ -161,7 +161,7 @@ int main(int argc, char** argv) {
 	} else {
 		// radius search
 		result = kdtree.radiusSearch(query, r, f);
-		result.resize(k);//reduces number to k
+		result = kdtree.knnSearch(query, result.size(), f);//reduces number to k and hacky orders them
 	}
 
 	// OUTPUT
