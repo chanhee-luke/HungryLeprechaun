@@ -6,7 +6,9 @@ Tool for hungry ND students
 ----
 Dependencies:
 The backend application uses C++ and can be compiled by the Makefile.
+
 The rest of the code proper is in php. 
+
 The tests and timers are a mix of python and shell scripts.
 
 ----
