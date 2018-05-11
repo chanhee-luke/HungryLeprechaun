@@ -51,11 +51,16 @@ function update(){
 		markers = {};
 		var alphaMapping = {};
 		alphaIndex = 0;
-		$("#resultList li").not(".template").remove();
+		$("#resultList li,hr").not(".template").remove();
 		$.each(result, function(index, elem){
 			var newElem = $("#resultList .template").clone().appendTo("#resultList ul").removeClass("template");
+			$("#resultList ul").append("<hr>");
 			var position = { "lng" : elem.long, "lat" : elem.lat };
-			if(!alphaMapping[position.toSource()]) alphaMapping[position.toSource()] = alpha[alphaIndex++];
+			var newLetter = 0;
+			if(!alphaMapping[position.toSource()]){
+				alphaMapping[position.toSource()] = alpha[alphaIndex++];
+				newLetter = 1;
+			}
 			markers[index] = new google.maps.Marker({
 				position: position,
 				map: map,
@@ -65,7 +70,16 @@ function update(){
 			newElem.find(".name").text(elem.name || "---");
 			newElem.find(".desc").text(elem.desc || "---");
 			newElem.find(".dist").text("(" + Math.round(getDistance(elem.lat, elem.long, f(loc.lat), f(loc.lng)) * decimals) / decimals + " mi)");
-			if(elem.img) newElem.find(".img").attr("src", elem.img);
+			if(elem.img) newElem.find("img.img").attr("src", elem.img);
+			newElem.find(".link").click(function(){
+				map.setCenter(position);
+			}).find("div").text(alphaMapping[position.toSource()]);
+			if(newLetter){
+				markers[index].addListener("click", function(){
+					$("#resultList li").removeClass("focused");
+					newElem.addClass("focused");
+				});
+			}
 		});
 	});
 }
