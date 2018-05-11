@@ -9,6 +9,9 @@ ul.list-unstyled img {
 .template {
 	display:none;
 }
+.link img {
+	cursor: pointer;
+}
 .pointer-overlay {
 	float: left;
 	position: relative;

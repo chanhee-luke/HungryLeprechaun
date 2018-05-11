@@ -71,9 +71,9 @@ function update(){
 			newElem.find(".desc").text(elem.desc || "---");
 			newElem.find(".dist").text("(" + Math.round(getDistance(elem.lat, elem.long, f(loc.lat), f(loc.lng)) * decimals) / decimals + " mi)");
 			if(elem.img) newElem.find("img.img").attr("src", elem.img);
-			newElem.find(".link").click(function(){
+			newElem.find(".link img").click(function(){
 				map.setCenter(position);
-			}).find("div").text(alphaMapping[position.toSource()]);
+			}).parent().find("div").text(alphaMapping[position.toSource()]);
 			if(newLetter){
 				markers[index].addListener("click", function(){
 					$("#resultList li").removeClass("focused");
