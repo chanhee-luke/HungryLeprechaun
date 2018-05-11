@@ -64,14 +64,14 @@
 				<div id="map">
 				</div>
 			</div>
-			<div class="col-lg-6">
+			<div id="resultList" class="col-lg-6">
 				<h3>Results</h3>
 				<ul class="list-unstyled">
 					<li class="media template">
-						<img class="mr-3" src="http://via.placeholder.com/64x64" alt="Generic placeholder image">
+						<img class="mr-3 img" src="http://via.placeholder.com/64x64" alt="Generic placeholder image">
 						<div class="media-body">
-							<h5 class="mt-0 mb-1">Name <i>(.5 mi)</i></h5>
-							Description
+							<h5 class="mt-0 mb-1"><span class="name">Name</span> <span class="dist">(.5 mi)</span></h5>
+							<span class="desc">Description</span>
 						</div>
 					</li>
 				</ul>
@@ -122,25 +122,47 @@
 				map: map
 			});*/
 		}
-
+		var decimals = Math.pow(10, 2);
 		function update(){
 			$.getJSON("locations.php", { "long" : loc.lng, "lat" : loc.lat }, function(result){
 				$.each(markers, function(index, elem){
+					console.log("null");
 					elem.setMap(null);
 				});
-				markers = null;
 				markers = {};
+				$("#resultList li").not(".template").remove();
 				$.each(result, function(index, elem){
-					markers[result] = new google.maps.Marker({
+					var newElem = $("#resultList .template").clone().appendTo("#resultList ul").removeClass("template");
+					markers[index] = new google.maps.Marker({
 						position: { "lng" : elem.long, "lat" : elem.lat },
 						map: map,
 						label: index,
 						draggable: false
 					});
+					newElem.find(".name").text(elem.name || "---");
+					newElem.find(".desc").text(elem.desc || "---");
+					newElem.find(".dist").text("(" + Math.round(getDistance(elem.lat, elem.long, loc.lat, loc.lng) * decimals) / decimals+ " mi)");
+					if(elem.img) newElem.find(".img").attr("src", elem.img);
 				});
 			});
 		}
 		$("#filter input,select").change(update);
+		function getDistance(lat1,long1,lat2,long2) {
+			var R = 3959; // radius of earth in miles
+			var dLat = deg2rad(lat2-lat1);
+			var dLon = deg2rad(long2-long1);
+			var a =
+				Math.sin(dLat/2) * Math.sin(dLat/2) +
+				Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
+				Math.sin(dLon/2) * Math.sin(dLon/2);
+			var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+			var d = R * c;
+			return d;
+		}
+
+		function deg2rad(deg) {
+			return deg * (Math.PI/180)
+		}
 	</script>
 </body>
 </html>
