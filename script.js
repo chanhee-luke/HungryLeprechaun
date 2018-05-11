@@ -57,23 +57,24 @@ function update(){
 			$("#resultList ul").append("<hr>");
 			var position = { "lng" : elem.long, "lat" : elem.lat };
 			var newLetter = 0;
-			if(!alphaMapping[position.toSource()]){
-				alphaMapping[position.toSource()] = alpha[alphaIndex++];
+			var strkey = elem.long + "," + elem.lat;
+			if(!alphaMapping[strkey]){
+				alphaMapping[strkey] = alpha[alphaIndex++];
 				newLetter = 1;
 			}
 			markers[index] = new google.maps.Marker({
 				position: position,
 				map: map,
-				label: alphaMapping[position.toSource()],
+				label: alphaMapping[strkey],
 				draggable: false
 			});
 			newElem.find(".name").text(elem.name || "---");
 			newElem.find(".desc").text(elem.desc || "---");
 			newElem.find(".dist").text("(" + Math.round(getDistance(elem.lat, elem.long, f(loc.lat), f(loc.lng)) * decimals) / decimals + " mi)");
 			if(elem.img) newElem.find("img.img").attr("src", elem.img);
-			newElem.find(".link img").click(function(){
+			newElem.find(".link").click(function(){
 				map.setCenter(position);
-			}).parent().find("div").text(alphaMapping[position.toSource()]);
+			}).find("div").text(alphaMapping[strkey]);
 			if(newLetter){
 				markers[index].addListener("click", function(){
 					$("#resultList li").removeClass("focused");

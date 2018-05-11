@@ -20,7 +20,7 @@ if(!is_null($rad))
 	$command .= " -r " . $rad;
 
 if(!is_null($num))
-	$command .= " -n " . $num;
+	$command .= " -k " . $num;
 
 $command .= " " . $long . " " . $lat;
 
@@ -37,6 +37,7 @@ $i = 0;
 
 while ($s = fgets($handle, 1024)) {
 	if($i >= 26) break;
+	//echo $s;
 	$results[$i++] = $data[intval(chop($s))];
 }
 
