@@ -32,23 +32,23 @@ echo "\t\t(no args)"
 result=$(../kdtree | grep "Usage\|Flags" | wc -l)
 if [ $result -lt 2 ]; then
 	echo "Err: No args should show help message, which should show Usage and Flags"
-	return 1;
+	exit 1;
 fi
 
 #Help flag test
 echo "\t\t-h"
 result=$(../kdtree -h | grep "Usage\|Flags" | wc -l)
 if [ $result -lt 2 ]; then
-	echo "Err: Help message should show Usage and Flags" 
-	return 2;
+	echo "Err: Help message should show Usage and Flags"
+	exit 2;
 fi
 
 #Invalid arg test
 echo "\t\t-w"
 result=$(../kdtree -w | grep "Usage\|Flags" | wc -l)
 if [ $result -lt 2 ]; then
-	echo "Err: Invalid flag should show Usage and Flags" 
-	return 3;
+	echo "Err: Invalid flag should show Usage and Flags"
+	exit 3;
 fi
 
 center=$(head -n 1 $file | sed -r "s/([^,]+),([^,]+),([^,]+,?)*/\1 \2/")
@@ -61,7 +61,7 @@ echo "\t\t-k (one)"
 result=$(../kdtree -k 1 $center)
 if [ $result -ne 0 ]; then
 	echo "Err: Only result: " $result "not 0";
-	return 4;
+	exit 4;
 fi
 
 #Counting test
@@ -70,7 +70,7 @@ result=$(../kdtree -k 5 $center)
 numlast=$(wcl "$result")
 if [ $numlast -ne 5 ]; then
 	echo "Err: Number of results:" $numlast ", not 5"
-	return 5;
+	exit 5;
 fi
 
 #All of them test
@@ -79,7 +79,7 @@ result=$(../kdtree -k $num $center)
 numlast=$(wcl "$result")
 if [ $numlast -ne $num ]; then
 	echo "Err: Number of results:" $numlast ", not" $num
-	return 6;
+	exit 6;
 fi
 
 echo "\tTest: -f"
@@ -91,7 +91,7 @@ result=$(../kdtree -k $num -f $newfile $center)
 numlast=$(wcl "$result")
 if [ $numlast -ne $num ]; then
 	echo "Err: Number of results:" $numlast ", not" $num
-	return 7;
+	exit 7;
 fi
 
 #No file test
@@ -100,7 +100,7 @@ result=$(../kdtree -f $file $center)
 numlast=$(wcl "$result")
 if [ $numlast -lt 1 ]; then
 	echo "Err: Should be no results, but had:" $numlast
-	return 8;
+	exit 8;
 fi
 
 mv $newfile $file
@@ -115,7 +115,7 @@ numnew=$(cat $file | grep $letter | wc -l)
 numlast=$(wcl "$result")
 if [ $numlast -lt $numnew ]; then
 	echo "Err: Number of results:" $numlast ", not" $numnew
-	return 9;
+	exit 9;
 fi
 
 #Regex query test
@@ -126,7 +126,7 @@ numnew=$(cat $file | grep -E "$regex" | wc -l)
 numlast=$(wcl "$result")
 if [ $numlast -lt $numnew ]; then
 	echo "Err: Number of results:" $numlast ", not" $numnew
-	return 10;
+	exit 10;
 fi
 
 echo "\tTest: -r"
@@ -137,7 +137,7 @@ result=$(../kdtree -r 0 $center)
 numlast=$(wcl "$result")
 if [ $numlast -ne 1 ]; then
 	echo "Err: Number of results:" $numlast ", not 1"
-	return 11;
+	exit 11;
 fi
 
 #Some Distance test
@@ -146,7 +146,7 @@ result=$(../kdtree -r .2 $center)
 numlast=$(wcl "$result")
 if [ $numlast -eq 1 -o $numlast -eq $num ]; then
 	echo "Err: Number should be between min and max, but was:" $numlast
-	return 12;
+	exit 12;
 fi
 
 #Large Distance test
@@ -155,7 +155,7 @@ result=$(../kdtree -r 20000 $center)
 numlast=$(wcl "$result")
 if [ $numlast -ne $num ]; then
 	echo "Err: Number of results:" $numlast ", not" $num
-	return 13;
+	exit 13;
 fi
 
 echo "\tTest: -p"
@@ -166,7 +166,7 @@ result=$(../kdtree -p 0 $center)
 numlast=$(wcl "$result")
 if [ $(echo "$result" | wc -w) -ne 0 ]; then
 	echo "Err: Number of results:" $numlast ", not 0"
-	return 14;
+	exit 14;
 fi
 
 #Some prices test
@@ -175,7 +175,7 @@ result=$(../kdtree -p 3 $center)
 numlast=$(wcl "$result")
 if [ $(echo "$result" | wc -w) -eq 0 -o $numlast -eq $num ]; then
 	echo "Err: Number should be between min and max, but was:" $numlast
-	return 15;
+	exit 15;
 fi
 
 #Large Distance test
@@ -184,7 +184,7 @@ result=$(../kdtree -p 15 $center)
 numlast=$(wcl "$result")
 if [ $numlast -ne $num ]; then
 	echo "Err: Number of results:" $numlast ", not" $num
-	return 16;
+	exit 16;
 fi
 
 echo "\tTest: (combos)"
@@ -199,7 +199,7 @@ result=$(../kdtree -k $k -q $q $center)
 numlast=$(wcl "$result")
 if [ $(echo "$result" | wc -w) -eq 0 -o $numlast -gt $k ]; then
 	echo "Err: Number should be between min and max, but was:" $numlast
-	return 17;
+	exit 17;
 fi
 
 echo "\t\t-k -r"
@@ -207,7 +207,7 @@ result=$(../kdtree -k $k -r $r $center)
 numlast=$(wcl "$result")
 if [ $(echo "$result" | wc -w) -eq 0 -o $numlast -gt $k ]; then
 	echo "Err: Number should be between min and max, but was:" $numlast
-	return 18;
+	exit 18;
 fi
 
 echo "\t\t-k -p"
@@ -215,7 +215,7 @@ result=$(../kdtree -k $k -p $p $center)
 numlast=$(wcl "$result")
 if [ $(echo "$result" | wc -w) -eq 0 -o $numlast -gt $k ]; then
 	echo "Err: Number should be between min and max, but was:" $numlast
-	return 19;
+	exit 19;
 fi
 
 echo "\t\t-q -r"
@@ -223,7 +223,7 @@ result=$(../kdtree -q $q -r $r $center)
 numlast=$(wcl "$result")
 if [ $(echo "$result" | wc -w) -eq 0 -o $numlast -eq $num ]; then
 	echo "Err: Number should be between min and max, but was:" $numlast
-	return 20;
+	exit 20;
 fi
 
 echo "\t\t-q -p"
@@ -231,7 +231,7 @@ result=$(../kdtree -q $q -p $p $center)
 numlast=$(wcl "$result")
 if [ $(echo "$result" | wc -w) -eq 0 -o $numlast -eq $num ]; then
 	echo "Err: Number should be between min and max, but was:" $numlast
-	return 21;
+	exit 21;
 fi
 
 echo "\t\t-r -p"
@@ -239,7 +239,7 @@ result=$(../kdtree -r $r -p $p $center)
 numlast=$(wcl "$result")
 if [ $(echo "$result" | wc -w) -eq 0 -o $numlast -eq $num ]; then
 	echo "Err: Number should be between min and max, but was:" $numlast
-	return 22;
+	exit 22;
 fi
 
 echo "\t\t-k -q -r"
@@ -247,7 +247,7 @@ result=$(../kdtree -k $k -q $q -r $r $center)
 numlast=$(wcl "$result")
 if [ $(echo "$result" | wc -w) -eq 0 -o $numlast -eq $num ]; then
 	echo "Err: Number should be between min and max, but was:" $numlast
-	return 23;
+	exit 23;
 fi
 
 echo "\t\t-k -q -p"
@@ -255,7 +255,7 @@ result=$(../kdtree -k $k -q $q -p $p $center)
 numlast=$(wcl "$result")
 if [ $(echo "$result" | wc -w) -eq 0 -o $numlast -eq $num ]; then
 	echo "Err: Number should be between min and max, but was:" $numlast
-	return 24;
+	exit 24;
 fi
 
 echo "\t\t-k -r -p"
@@ -263,7 +263,7 @@ result=$(../kdtree -k $k -r $r -p $p $center)
 numlast=$(wcl "$result")
 if [ $(echo "$result" | wc -w) -eq 0 -o $numlast -eq $num ]; then
 	echo "Err: Number should be between min and max, but was:" $numlast
-	return 25;
+	exit 25;
 fi
 
 echo "\t\t-q -r -p"
@@ -271,7 +271,7 @@ result=$(../kdtree -q $q -r $r -p $p $center)
 numlast=$(wcl "$result")
 if [ $(echo "$result" | wc -w) -eq 0 -o $numlast -eq $num ]; then
 	echo "Err: Number should be between min and max, but was:" $numlast
-	return 26;
+	exit 26;
 fi
 
 echo "\t\t-k -q -r -p"
@@ -279,7 +279,7 @@ result=$(../kdtree -k $k -q $q -r $r -p $p $center)
 numlast=$(wcl "$result")
 if [ $(echo "$result" | wc -w) -eq 0 -o $numlast -eq $num ]; then
 	echo "Err: Number should be between min and max, but was:" $numlast
-	return 27;
+	exit 27;
 fi
 
 echo "Score: 100.0"
