@@ -76,7 +76,7 @@
 			</div>
 		</div>
 	</div>
-	<script src="https://maps.googleapis.com/maps/api/js?key=<?php require "key.txt" ?>&callback=initMap" async defer></script>
 	<script src="script.js" type="text/javascript"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=<?php require "key.txt" ?>&callback=initMap" async defer></script>
 </body>
 </html>

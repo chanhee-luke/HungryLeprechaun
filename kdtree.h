@@ -7,6 +7,9 @@
 #include <exception>
 #include <functional>
 #include <string>
+#include <math.h>
+#include <cmath> 
+#define earthRadiusMi 3959
 
 namespace kdt {
 	/** @brief k-d tree class.
@@ -201,7 +204,21 @@ namespace kdt {
 				validateRecursive(node1, depth + 1);
 		}
 
-		static double distance(const PointT& p, const PointT& q) {
+		static double deg2rad(double deg) {
+			return (deg * M_PI / 180);
+		}
+
+		static double distance(const PointT& p, const PointT& q){
+			double lat1r, lon1r, lat2r, lon2r, u, v;
+			lat1r = deg2rad(p[1]);
+			lon1r = deg2rad(p[0]);
+			lat2r = deg2rad(q[1]);
+			lon2r = deg2rad(q[0]);
+			u = sin((lat2r - lat1r)/2);
+			v = sin((lon2r - lon1r)/2);
+			return 2.0 * earthRadiusMi * asin(sqrt(u * u + cos(lat1r) * cos(lat2r) * v * v));
+		}
+		static double distanceOld(const PointT& p, const PointT& q) {
 			double dist = 0;
 			for (size_t i = 0; i < PointT::DIM; i++)
 				dist += (p[i] - q[i]) * (p[i] - q[i]);

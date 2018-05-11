@@ -33,14 +33,11 @@ $str = file_get_contents('./locations.json');
 $data = json_decode($str, TRUE);
 
 $results = array();
-$alphas = range('A', 'Z');
 $i = 0;
 
 while ($s = fgets($handle, 1024)) {
 	if($i >= 26) break;
-	//echo chop($s);
-	$results[$alphas[$i]] = $data[intval(chop($s))];//$results[intval]
-	$i += 1;
+	$results[$i++] = $data[intval(chop($s))];
 }
 
 echo json_encode($results);
