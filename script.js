@@ -68,6 +68,7 @@ function update(){
 				label: alphaMapping[strkey],
 				draggable: false
 			});
+			newElem.attr("id", "li" + index);
 			newElem.find(".name").text(elem.name || "---");
 			newElem.find(".desc").text(elem.desc || "---");
 			newElem.find(".dist").text("(" + Math.round(getDistance(elem.lat, elem.long, f(loc.lat), f(loc.lng)) * decimals) / decimals + " mi)");
@@ -79,6 +80,7 @@ function update(){
 				markers[index].addListener("click", function(){
 					$("#resultList li").removeClass("focused");
 					newElem.addClass("focused");
+					window.location.hash = "li" + index;
 				});
 			}
 		});

@@ -66,6 +66,7 @@
 				<!-- Map -->
 				<div id="map">
 				</div>
+				<p class="text-center">If you do not have GPS, drag the dot marker to set your position</p>
 			</div>
 			<!-- Results -->
 			<div id="resultList" class="col-lg-6">

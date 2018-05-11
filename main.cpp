@@ -161,7 +161,7 @@ int main(int argc, char** argv) {
 	} else {
 		// radius search
 		result = kdtree.radiusSearch(query, r, f);
-		result = kdtree.knnSearch(query, result.size(), f);//reduces number to k and hacky orders them
+		result = kdtree.knnSearch(query, (int) result.size() < k ? result.size() : k, f);//reduces number to k and hacky orders them
 	}
 
 	// OUTPUT
