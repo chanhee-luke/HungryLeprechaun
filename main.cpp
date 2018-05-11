@@ -46,7 +46,7 @@ struct Filter {
 	bool operator()(Location l){
 		if(!regex_search(l.d.name, query))
 			return false;
-		if(!l.d.price && !(2 << l.d.price & prices))
+		if(!((1 << (l.d.price - 1)) & prices))
 			return false;
 		return true;
 	}
@@ -71,7 +71,7 @@ static const char SEP = ',';
 int main(int argc, char** argv) {
 
 	double r = -1;
-	int k = 10;
+	int k = 20;
 	int prices = 15;
 	regex reg(".*");
 
@@ -134,10 +134,13 @@ int main(int argc, char** argv) {
 		double lat = stod(word);
 
 
-		getline(ss, word);
+		getline(ss, word, SEP);
 		string name = word;
 
-		Descriptor d = {name, 0}; //TODO add price here
+		getline(ss, word);
+		int price = stoi(word);
+
+		Descriptor d = {name, price}; //TODO add price here
 
 		Location l(lon, lat, d);//TODO fix long and lat switchup
 		locs.push_back(l);
